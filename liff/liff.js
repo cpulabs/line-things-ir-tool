@@ -30,6 +30,7 @@ window.onload = () => {
 
     var data = [1,2,3,4,5,6,7];
 
+
     var index = (data[0] << 8) + data[1];
     var length_index = (data[2] << 8) + data[3];
     var ir_freq = data[4];
@@ -37,6 +38,28 @@ window.onload = () => {
     var rawcode_length = (data[6] << 8) + data[7];
     var code0 = (data[8] << 24) + (data[9] << 16) + (data[10] << 8) + data[11];
     var code1 = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
+
+    g_rawcode[index*2] = code0;
+    g_rawcode[index*2 + 1] = code1;
+
+    uiDebug1Message(index);
+    uiDebug2Message(length_index);
+
+    index = 5;
+    length_index = 6;
+
+    if(index == (length_index-1)){
+        uiDebug1Message("aaaaaa");
+
+        document.getElementById("rawcode_length").innerText = rawcode_length;
+        document.getElementById("code_format").innerText = ir_format;
+        document.getElementById("freq").innerText = ir_freq;
+        document.getElementById("rawcode").innerText = g_rawcode;
+
+        g_ir_freq = ir_freq;
+        g_ir_format = ir_format;
+        g_rawcode_length = rawcode_length;
+    }
 
     uiDebug1Message(index);
     uiDebug2Message(length_index);
@@ -280,7 +303,7 @@ function liffGetMatrixDataCharacteristic(characteristic) {
             uiDebug2Message(length_index);
 
             if(index == (length_index-1)){
-                uiDebugMessage1(g_rawcode);
+                uiDebug1Message(g_rawcode);
 
                 document.getElementById("rawcode_length").innerText = rawcode_length;
                 document.getElementById("code_format").innerText = ir_format;
@@ -289,7 +312,7 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
                 g_ir_freq = ir_freq;
                 g_ir_format = ir_format;
-                g_rawcode_length =r rawcode_length;
+                g_rawcode_length = rawcode_length;
             }
 
 
