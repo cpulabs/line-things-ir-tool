@@ -1,0 +1,85 @@
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <script src=" https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.0.2/chroma.min.js"></script>
+    <script src="resampling.js"></script>
+
+    <script src="liff.js"></script>
+    <link rel="stylesheet" type="text/css" href="liff.css" />
+  </head>
+
+  <body>
+    <!-- Title -->
+    <h2>LINE Things PoC</h2>
+
+
+    <canvas id="color_sample" width="200" height="20">図形を表示するには、canvasタグをサポートしたブラウザが必要です。</canvas>
+
+    <br>
+
+    <br>
+
+    <hr />
+    <p>
+      <img id="loading-animation" class="" src="loading.gif" height="14px" />
+      <span id="status" class="inactive">Device disconnected</span>
+    </p>
+    <hr />
+    <div id="controls" class="hidden">
+      <!-- Device Info Table -->
+
+
+      <canvas id="matrix_original" width="8" height="8">図形を表示するには、canvasタグをサポートしたブラウザが必要です。</canvas><br>
+      <canvas id="matrix_320x320" width="320" height="320">図形を表示するには、canvasタグをサポートしたブラウザが必要です。</canvas>
+
+
+
+      <table class="device-info-table">
+        <tr>
+          <th class="device-info-cell device-info-key">Max</th>
+          <td class="device-info-cell device-info-val" id="max_temp"></td>
+        </tr>
+          <tr>
+            <th class="device-info-cell device-info-key">Min</th>
+            <td class="device-info-cell device-info-val" id="min_temp"></td>
+          </tr>
+            <tr>
+              <th class="device-info-cell device-info-key">Name</th>
+              <td class="device-info-cell device-info-val" id="device-name"></td>
+            </tr>
+        <tr>
+          <th class="device-info-cell device-info-key">ID</th>
+          <td class="device-info-cell device-info-val" id="device-id"></td>
+        </tr>
+        <tr>
+          <th class="device-info-cell device-info-key">PSDI</th>
+          <td class="device-info-cell device-info-val" id="device-psdi"></td>
+        </tr>
+
+
+
+      </table>
+      <hr />
+      <!-- Toggle LED -->
+      <p>
+
+        <form name="config">
+          <input type="checkbox" name="adj_range" value="16x16">Adjustable Range<br>
+          <input type="checkbox" name="get_singleshot" value="16x16">Singleshot(for debug)<br>
+        </form>
+        <br>
+        <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="handlerLoadMatrix()">Scan temperature 10 Second</button>
+
+        <div id="debug">Message1</div>
+        <div id="debug1">Message2</div>
+        <div id="debug2">Message3</div>
+      </p>
+      <hr />
+    </div>
+  </body>
+
+</html>
