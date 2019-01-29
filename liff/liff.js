@@ -13,9 +13,10 @@ const PSDI_CHARACTERISTIC_UUID  = '26e2b12b-85f0-4f3f-9fdd-91d114270e6e';
 
 
 
-// Matrix data
 let g_rawcode = [];
-
+let g_ir_freq;
+let g_ir_format;
+let g_rawcode_length;
 
 
 
@@ -278,13 +279,17 @@ function liffGetMatrixDataCharacteristic(characteristic) {
             uiDebug1Message(index);
             uiDebug2Message(length_index);
 
-            if(index == length_index-1){
+            if(index == (length_index-1)){
                 uiDebugMessage1(g_rawcode);
 
                 document.getElementById("rawcode_length").innerText = rawcode_length;
                 document.getElementById("code_format").innerText = ir_format;
                 document.getElementById("freq").innerText = ir_freq;
                 document.getElementById("rawcode").innerText = g_rawcode;
+
+                g_ir_freq = ir_freq;
+                g_ir_format = ir_format;
+                g_rawcode_length =r rawcode_length;
             }
 
 
@@ -298,6 +303,7 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
 
 function liffWriteLoadMatrix() {
+
     window.cmdCharacteristic.writeValue(
         new Uint8Array([0x02, 0, 0, 10])
     ).catch(error => {
