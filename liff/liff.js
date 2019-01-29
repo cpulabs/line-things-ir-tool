@@ -249,7 +249,9 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
             var index = (data[0] << 8) + data[1];
             var length_index = (data[2] << 8) + data[3];
-            var rawcode_length = (data[4] << 24) + (data[5] << 16) + (data[6] << 8) + data[7];
+            var ir_freq = data[4];
+            var ir_format = data[5];
+            var rawcode_length = (data[6] << 8) + data[7];
             var code0 = (data[8] << 24) + (data[9] << 16) + (data[10] << 8) + data[11];
             var code1 = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
 
@@ -260,8 +262,8 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                 uiDebugMessage1(g_rawcode);
 
                 document.getElementById("rawcode_length").innerText = rawcode_length;
-                document.getElementById("code_format").innerText = "NEC";
-                document.getElementById("freq").innerText = "38k";
+                document.getElementById("code_format").innerText = ir_format;
+                document.getElementById("freq").innerText = ir_freq;
                 document.getElementById("rawcode").innerText = g_rawcode;
             }
 
