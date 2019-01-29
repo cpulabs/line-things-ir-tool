@@ -266,6 +266,7 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                 document.getElementById("freq").innerText = ir_freq;
                 document.getElementById("rawcode").innerText = g_rawcode;
             }
+            
 
         });
     }).catch(error => {
