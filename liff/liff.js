@@ -340,7 +340,7 @@ function liffWriteLoadMatrix() {
     }
 
     for(var j = 0; j < 2; j = j + 1){
-      tx_data[2+j] = 0xff & ((rawcode_length/2) >> (8*(1-j)));
+      tx_data[2+j] = 0xff & ((g_rawcode_length/2) >> (8*(1-j)));
     }
 
     //freq(0:38k, 1;40k)
@@ -350,7 +350,7 @@ function liffWriteLoadMatrix() {
 
     //Number of Frame
     for(var j = 0; j < 2; j = j + 1){
-      tx_data[6+j] = 0xff & (rawcode_length >> (8*(1-j)));
+      tx_data[6+j] = 0xff & (g_rawcode_length >> (8*(1-j)));
     }
 
     //Data0
