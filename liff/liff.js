@@ -27,45 +27,43 @@ let g_rawcode_length;
 window.onload = () => {
     initializeApp();
 
+    g_rawcode_length = 112;
 
-    var data = [1,2,3,4,5,6,7];
+    for(var i = 0; i < g_rawcode_length/2; i = i + 1){
+      var tx_data = [];
 
+      for(var j = 0; j < 2; j = j + 1){
+        tx_data[j] = 0xff & (i >> (8*(1-j)));
+      }
 
-    var index = (data[0] << 8) + data[1];
-    var length_index = (data[2] << 8) + data[3];
-    var ir_freq = data[4];
-    var ir_format = data[5];
-    var rawcode_length = (data[6] << 8) + data[7];
-    var code0 = (data[8] << 24) + (data[9] << 16) + (data[10] << 8) + data[11];
-    var code1 = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
+      for(var j = 0; j < 2; j = j + 1){
+        tx_data[2+j] = 0xff & ((rawcode_length/2) >> (8*(1-j)));
+      }
 
-    g_rawcode[index*2] = code0;
-    g_rawcode[index*2 + 1] = code1;
+      //freq(0:38k, 1;40k)
+      tx_data[4] = 0;
+      //Format(0:unknown, 1:NEC, 2:SONY...)
+      tx_data[5] = 1;
 
-    uiDebug1Message(index);
-    uiDebug2Message(length_index);
+      //Number of Frame
+      for(var j = 0; j < 2; j = j + 1){
+        tx_data[6+j] = 0xff & (rawcode_length >> (8*(1-j)));
+      }
 
-    index = 5;
-    length_index = 6;
+      //Data0
+      for(var j = 0; j < 4; j = j + 1){
+        tx_data[8+j] = 0xff & (g_rawcode[i*2] >> (8*(3-j)));
+      }
 
-    if(index == (length_index-1)){
-        uiDebug1Message("aaaaaa");
+      //Data1
+      for(var j = 0; j < 4; j = j + 1){
+        tx_data[12+j] = 0xff & (g_rawcode[i*2 + 1] >> (8*(3-j)));
+      }
 
-        document.getElementById("rawcode_length").innerText = rawcode_length;
-        document.getElementById("code_format").innerText = ir_format;
-        document.getElementById("freq").innerText = ir_freq;
-        document.getElementById("rawcode").innerText = g_rawcode;
-
-        g_ir_freq = ir_freq;
-        g_ir_format = ir_format;
-        g_rawcode_length = rawcode_length;
+      uiDebug1Message(tx_data);
     }
+  }
 
-    uiDebug1Message(index);
-    uiDebug2Message(length_index);
-
-
-    document.getElementById("rawcode_length").innerText = "512";
 };
 
 // ----------------- //
@@ -303,16 +301,22 @@ function liffGetMatrixDataCharacteristic(characteristic) {
             uiDebug2Message(length_index);
 
             if(index == (length_index-1)){
-                uiDebug1Message(g_rawcode);
-
-                document.getElementById("rawcode_length").innerText = rawcode_length;
-                document.getElementById("code_format").innerText = ir_format;
-                document.getElementById("freq").innerText = ir_freq;
-                document.getElementById("rawcode").innerText = g_rawcode;
-
                 g_ir_freq = ir_freq;
                 g_ir_format = ir_format;
                 g_rawcode_length = rawcode_length;
+
+                document.getElementById("rawcode_length").innerText = rawcode_length;
+                document.getElementById("code_format").innerText = ir_format;
+                document.getElementById("freq").innerText = (ir_freq == 0)? "38k" : "40k";
+
+                var str_rawcode = "";
+                for(var i = 0; i < rawcode_length; i = i + 1){
+                  str_rawcode = str_rawcode + g_rawcode[i];
+                  if(i < rawcode_length - 1){
+                    str_rawcode = str_rawcode + ",";
+                  }
+                }
+                document.getElementById("rawcode").innerText = str_rawcode;
             }
 
 
@@ -326,11 +330,41 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
 
 function liffWriteLoadMatrix() {
+  for(var i = 0; i < g_rawcode_length/2; i = i + 1){
+    var tx_data = [];
 
-    window.cmdCharacteristic.writeValue(
-        new Uint8Array([0x02, 0, 0, 10])
-    ).catch(error => {
-        uiDebugMessage("liffWriteLoadMatrix");
-        uiStatusError(makeErrorMsg(error), false);
+    for(var j = 0; j < 2; j = j + 1){
+      tx_data[j] = 0xff & (i >> (8*(1-j)));
+    }
+
+    for(var j = 0; j < 2; j = j + 1){
+      tx_data[2+j] = 0xff & ((rawcode_length/2) >> (8*(1-j)));
+    }
+
+    //freq(0:38k, 1;40k)
+    tx_data[4] = 0;
+    //Format(0:unknown, 1:NEC, 2:SONY...)
+    tx_data[5] = 1;
+
+    //Number of Frame
+    for(var j = 0; j < 2; j = j + 1){
+      tx_data[6+j] = 0xff & (rawcode_length >> (8*(1-j)));
+    }
+
+    //Data0
+    for(var j = 0; j < 4; j = j + 1){
+      tx_data[8+j] = 0xff & (g_rawcode[i*2] >> (8*(3-j)));
+    }
+
+    //Data1
+    for(var j = 0; j < 4; j = j + 1){
+      tx_data[12+j] = 0xff & (g_rawcode[i*2 + 1] >> (8*(3-j)));
+    }
+
+    //Transmit
+    window.cmdCharacteristic.writeValue(tx_data).catch(error => {
+      uiDebugMessage("liffWriteLoadMatrix");
+      uiStatusError(makeErrorMsg(error), false);
     });
+  }
 }
