@@ -29,6 +29,7 @@ window.onload = () => {
 
     g_rawcode_length = 112;
 
+
     for(var i = 0; i < g_rawcode_length/2; i = i + 1){
       var tx_data = [];
 
@@ -62,7 +63,6 @@ window.onload = () => {
 
       uiDebug1Message(tx_data);
     }
-  }
 
 };
 
