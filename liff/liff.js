@@ -237,6 +237,8 @@ function liffGetPSDIService(service) {
 }
 
 
+
+
 function liffGetMatrixDataCharacteristic(characteristic) {
     characteristic.startNotifications().then(() => {
         characteristic.addEventListener('characteristicvaluechanged', e => {
