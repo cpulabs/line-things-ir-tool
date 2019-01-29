@@ -238,7 +238,6 @@ function liffGetPSDIService(service) {
 
 
 
-
 function liffGetMatrixDataCharacteristic(characteristic) {
     characteristic.startNotifications().then(() => {
         characteristic.addEventListener('characteristicvaluechanged', e => {
@@ -259,6 +258,11 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
             if(index == length_index-1){
                 uiDebugMessage1(g_rawcode);
+
+                document.getElementById("rawcode_length").innerText = rawcode_length;
+                document.getElementById("code_format").innerText = "NEC";
+                document.getElementById("freq").innerText = "38k";
+                document.getElementById("rawcode").innerText = g_rawcode;
             }
 
         });
