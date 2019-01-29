@@ -260,6 +260,9 @@ function liffGetMatrixDataCharacteristic(characteristic) {
             g_rawcode[index*2] = code0;
             g_rawcode[index*2 + 1] = code1;
 
+            uiDebugMessage1(index);
+            uiDebugMessage2(length_index);
+
             if(index == length_index-1){
                 uiDebugMessage1(g_rawcode);
 
