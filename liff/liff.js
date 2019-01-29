@@ -61,7 +61,9 @@ window.onload = () => {
         tx_data[12+j] = 0xff & (g_rawcode[i*2 + 1] >> (8*(3-j)));
       }
 
-      uiDebug1Message(tx_data);
+
+
+      uiDebug1Message(new Uint8Array(tx_data));
     }
 
 };
@@ -362,7 +364,7 @@ function liffWriteLoadMatrix() {
     }
 
     //Transmit
-    window.cmdCharacteristic.writeValue(tx_data).catch(error => {
+    window.cmdCharacteristic.writeValue(new Uint8Array(tx_data)).catch(error => {
       uiDebugMessage("liffWriteLoadMatrix");
       uiStatusError(makeErrorMsg(error), false);
     });
