@@ -25,6 +25,8 @@ let g_rawcode = [];
 
 window.onload = () => {
     initializeApp();
+
+    document.getElementById("rawcode_length").innerText = "512";
 };
 
 // ----------------- //
@@ -266,7 +268,7 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                 document.getElementById("freq").innerText = ir_freq;
                 document.getElementById("rawcode").innerText = g_rawcode;
             }
-            
+
 
         });
     }).catch(error => {
