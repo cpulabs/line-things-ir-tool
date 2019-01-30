@@ -68,16 +68,6 @@ window.onload = () => {
 
 };
 
-// ----------------- //
-// Handler functions //
-// ----------------- //
-
-function handlerLoadMatrix() {
-    //fuiToggleLedButton(ledState);
-    //liffToggleDeviceLedState(ledState);
-    liffWriteLoadMatrix();
-}
-
 // ------------ //
 // UI functions //
 // ------------ //
@@ -288,7 +278,7 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
             uiDebugMessage(data);
 
-            var index = (data[0] << 8) + data[1];
+            var index = data[1];
             var length_index = (data[2] << 8) + data[3];
             var ir_freq = data[4];
             var ir_format = data[5];
@@ -331,41 +321,67 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
 
 
-function liffWriteLoadMatrix() {
-  for(var i = 0; i < g_rawcode_length/2; i = i + 1){
-    var tx_data = [];
+function transmit_ir() {]
+  ble_transmit_cmd(0)
+}
 
-    for(var j = 0; j < 2; j = j + 1){
-      tx_data[j] = 0xff & (i >> (8*(1-j)));
+function receive_ir() {
+  ble_transmit_cmd(1)
+}
+
+
+
+
+//CMD0:Transmit BLE Signel, CMD1:Reveive
+function ble_transmit_cmd(cmd) {
+  if(cmd == 0){
+    for(var i = 0; i < g_rawcode_length/2; i = i + 1){
+      var tx_data = [];
+
+      /*
+      for(var j = 0; j < 2; j = j + 1){
+        tx_data[j] = 0xff & (i >> (8*(1-j)));
+      }
+      */
+      //CMD
+      tx_data[0] = 0;
+      //index
+      tx_data[1] = i & 0xff;
+
+
+      for(var j = 0; j < 2; j = j + 1){
+        tx_data[2+j] = 0xff & ((g_rawcode_length/2) >> (8*(1-j)));
+      }
+
+      //freq(0:38k, 1;40k)
+      tx_data[4] = 0;
+      //Format(0:unknown, 1:NEC, 2:SONY...)
+      tx_data[5] = 1;
+
+      //Number of Frame
+      for(var j = 0; j < 2; j = j + 1){
+        tx_data[6+j] = 0xff & (g_rawcode_length >> (8*(1-j)));
+      }
+
+      //Data0
+      for(var j = 0; j < 4; j = j + 1){
+        tx_data[8+j] = 0xff & (g_rawcode[i*2] >> (8*(3-j)));
+      }
+
+      //Data1
+      for(var j = 0; j < 4; j = j + 1){
+        tx_data[12+j] = 0xff & (g_rawcode[i*2 + 1] >> (8*(3-j)));
+      }
+
+      //Transmit
+      window.cmdCharacteristic.writeValue(new Uint8Array(tx_data)).catch(error => {
+        uiDebugMessage("liffWriteLoadMatrix");
+        uiStatusError(makeErrorMsg(error), false);
+      });
     }
-
-    for(var j = 0; j < 2; j = j + 1){
-      tx_data[2+j] = 0xff & ((g_rawcode_length/2) >> (8*(1-j)));
-    }
-
-    //freq(0:38k, 1;40k)
-    tx_data[4] = 0;
-    //Format(0:unknown, 1:NEC, 2:SONY...)
-    tx_data[5] = 1;
-
-    //Number of Frame
-    for(var j = 0; j < 2; j = j + 1){
-      tx_data[6+j] = 0xff & (g_rawcode_length >> (8*(1-j)));
-    }
-
-    //Data0
-    for(var j = 0; j < 4; j = j + 1){
-      tx_data[8+j] = 0xff & (g_rawcode[i*2] >> (8*(3-j)));
-    }
-
-    //Data1
-    for(var j = 0; j < 4; j = j + 1){
-      tx_data[12+j] = 0xff & (g_rawcode[i*2 + 1] >> (8*(3-j)));
-    }
-
-    //Transmit
-    window.cmdCharacteristic.writeValue(new Uint8Array(tx_data)).catch(error => {
-      uiDebugMessage("liffWriteLoadMatrix");
+  }else{
+    window.cmdCharacteristic.writeValue(new Uint8Array([1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])).catch(error => {
+      uiDebugMessage("liffWriteLoadMatrix - Req");
       uiStatusError(makeErrorMsg(error), false);
     });
   }
