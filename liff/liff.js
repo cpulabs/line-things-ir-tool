@@ -319,10 +319,11 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                   document.getElementById("rawcode").innerText = str_rawcode;
                   //document.getElementById("rawcode").value = str_rawcode;
               }
-            }else if(){}
+            }else if(data[0] == 1){
+                //receive comprex Data
+                document.getElementById("code_comprex").innerText = "AAA";
 
-
-
+            }
         });
     }).catch(error => {
         uiDebugMessage("liffGetMatrixDataCharacteristic");
