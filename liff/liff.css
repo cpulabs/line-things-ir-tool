@@ -95,3 +95,10 @@ p {
     max-width: 200px;
     font-family: monospace, monospace;
 }
+
+.rawcode-info-val {
+    padding-left: 8px;
+    word-wrap: break-word;
+    max-width: 320px;
+    font-family: monospace, monospace;
+}
