@@ -27,44 +27,6 @@ let g_rawcode_length;
 window.onload = () => {
     initializeApp();
 
-    g_rawcode_length = 112;
-
-
-    for(var i = 0; i < g_rawcode_length/2; i = i + 1){
-      var tx_data = [];
-
-      for(var j = 0; j < 2; j = j + 1){
-        tx_data[j] = 0xff & (i >> (8*(1-j)));
-      }
-
-      for(var j = 0; j < 2; j = j + 1){
-        tx_data[2+j] = 0xff & ((rawcode_length/2) >> (8*(1-j)));
-      }
-
-      //freq(0:38k, 1;40k)
-      tx_data[4] = 0;
-      //Format(0:unknown, 1:NEC, 2:SONY...)
-      tx_data[5] = 1;
-
-      //Number of Frame
-      for(var j = 0; j < 2; j = j + 1){
-        tx_data[6+j] = 0xff & (rawcode_length >> (8*(1-j)));
-      }
-
-      //Data0
-      for(var j = 0; j < 4; j = j + 1){
-        tx_data[8+j] = 0xff & (g_rawcode[i*2] >> (8*(3-j)));
-      }
-
-      //Data1
-      for(var j = 0; j < 4; j = j + 1){
-        tx_data[12+j] = 0xff & (g_rawcode[i*2 + 1] >> (8*(3-j)));
-      }
-
-
-
-      uiDebug1Message(new Uint8Array(tx_data));
-    }
 
 };
 
@@ -361,7 +323,18 @@ function receive_ir() {
 }
 
 function sendLine(){
-  
+  liff.sendMessages([{
+      type: 'text',
+      text: "rawcode - test"
+  }, {
+      type: 'sticker',
+      packageId: '2',
+      stickerId: '144'
+  }]).then(function () {
+      window.alert("Message sent");
+  }).catch(function (error) {
+      window.alert("Error sending message: " + error);
+  });
 }
 
 
