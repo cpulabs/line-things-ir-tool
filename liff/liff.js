@@ -327,7 +327,8 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                     str_rawcode = str_rawcode + ",";
                   }
                 }
-                document.getElementById("rawcode").innerText = str_rawcode;
+                //document.getElementById("rawcode").innerText = str_rawcode;
+                document.getElementById("rawcode").value = str_rawcode;
             }
 
 
