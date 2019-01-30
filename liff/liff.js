@@ -351,10 +351,12 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
 
 function transmit_ir() {
+  uiProgressBar(100, 0);
   ble_transmit_cmd(0)
 }
 
 function receive_ir() {
+  uiProgressBar(100, 0);
   ble_transmit_cmd(1)
 }
 
@@ -365,6 +367,8 @@ function receive_ir() {
 function ble_transmit_cmd(cmd) {
   if(cmd == 0){
     for(var i = 0; i < g_rawcode_length/2; i = i + 1){
+      uiProgressBar(g_rawcode_length/2, i+1);
+
       var tx_data = [];
 
       /*
@@ -407,8 +411,6 @@ function ble_transmit_cmd(cmd) {
         uiDebugMessage("liffWriteLoadMatrix");
         uiStatusError(makeErrorMsg(error), false);
       });
-
-      uiProgressBar(g_rawcode_length/2, i+1);
     }
   }else{
     window.cmdCharacteristic.writeValue(new Uint8Array([1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])).catch(error => {
