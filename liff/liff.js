@@ -307,7 +307,28 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                   }
                   document.getElementById("code_format").innerText = fotmat_txt;
 
-                  document.getElementById("freq").innerText = (ir_freq == 0)? "38k" : "40k";
+                  var freq_txt = ""; //0:UNKNOW, 1:30kHz, 2:33kHz, 3:36 kHz, 4:36,7kHz, 5:38kHz, 6:40kHz, 7:56 kHz
+                  if(ir_freq == 0){
+                    freq_txt = "UNKNOWN";
+                  }else if(ir_freq == 1){
+                    freq_txt = "30KHz";
+                  }else if(ir_freq == 2){
+                    freq_txt = "33KHz";
+                  }else if(ir_freq == 3){
+                    freq_txt = "36KHz";
+                  }else if(ir_freq == 4){
+                    freq_txt = "36.7KHz";
+                  }else if(ir_freq == 5){
+                    freq_txt = "38KHz";
+                  }else if(ir_freq == 6){
+                    freq_txt = "40KHz";
+                  }else if(ir_freq == 7){
+                    freq_txt = "56KHz";
+                  }else{
+                    freq_txt = "UNKNOWN";
+                  }
+
+                  document.getElementById("freq").innerText = freq_txt;
 
                   var str_rawcode = "";
                   for(var i = 0; i < rawcode_length; i = i + 1){
