@@ -302,6 +302,28 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                     fotmat_txt = "RC5";
                   }else if(ir_format == 6){
                     fotmat_txt = "RC6";
+                  }else if(ir_format == 7){
+                    fotmat_txt = "SAMSUNG";
+                  }else if(ir_format == 8){
+                    fotmat_txt = "WHYNTER";
+                  }else if(ir_format == 9){
+                    fotmat_txt = "AIWA RC T501";
+                  }else if(ir_format == 10){
+                    fotmat_txt = "LG";
+                  }else if(ir_format == 11){
+                    fotmat_txt = "SANYO";
+                  }else if(ir_format == 12){
+                    fotmat_txt = "MITSUBISHI";
+                  }else if(ir_format == 13){
+                    fotmat_txt = "DISH";
+                  }else if(ir_format == 14){
+                    fotmat_txt = "SHARP";
+                  }else if(ir_format == 15){
+                    fotmat_txt = "DENON";
+                  }else if(ir_format == 16){
+                    fotmat_txt = "PROTON";
+                  }else if(ir_format == 17){
+                    fotmat_txt = "LEGO_PF";
                   }else{
                     fotmat_txt = "UNKNOWN";
                   }
