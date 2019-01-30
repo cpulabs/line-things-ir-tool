@@ -27,9 +27,9 @@
       <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="receive_ir()">Receive IR Signal</button>
       <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="transmit_ir()">Transmit IR Signal</button>
 
+      <br>
 
       <!-- Device Info Table -->
-
       <table class="device-info-table">
         <tr>
 
@@ -48,9 +48,12 @@
           <th class="device-info-cell device-info-key">Rawcode</th>
 
           <!-- <td class="device-info-cell device-info-val" id="rawcode"></td> -->
-          <td><input type="text" value="" style="width:200px;height:200px;" id="rawcode"></td>
-
+          <td><input type="text" value="" wrap="hard" style="width:200px;height:200px;" id="rawcode"></td>
         </tr>
+      </table>
+
+      <p>
+      <table class="device-info-table">
             <tr>
               <th class="device-info-cell device-info-key">Name</th>
               <td class="device-info-cell device-info-val" id="device-name"></td>
@@ -67,6 +70,7 @@
 
 
       </table>
+    </p>
       <hr />
       <!-- Toggle LED -->
       <p>
