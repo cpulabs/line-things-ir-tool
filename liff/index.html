@@ -15,10 +15,6 @@
 
     <br>
 
-            <div id="debug">Message1</div>
-            <div id="debug1">Message2</div>
-            <div id="debug2">Message3</div>
-
     <br>
 
     <hr />
@@ -28,12 +24,16 @@
     </p>
     <hr />
     <div id="controls" class="hidden">
+      <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="receive_ir()">Receive IR Signal</button>
+      <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="transmit_ir()">Transmit IR Signal</button>
+
+
       <!-- Device Info Table -->
 
       <table class="device-info-table">
         <tr>
 
-          <th class="device-info-cell device-info-key">Number of rawcode length</th>
+          <th class="device-info-cell device-info-key">Length</th>
           <td class="device-info-cell device-info-val" id="rawcode_length"></td>
         </tr>
         <tr>
@@ -48,7 +48,7 @@
           <th class="device-info-cell device-info-key">Rawcode</th>
 
           <!-- <td class="device-info-cell device-info-val" id="rawcode"></td> -->
-          <td><input type="text" value="" id="rawcode"></td>
+          <td><input type="text" value="" style="width:200px;height:200px;" id="rawcode"></td>
 
         </tr>
             <tr>
@@ -71,12 +71,9 @@
       <!-- Toggle LED -->
       <p>
 
-        <form name="config">
-          <input type="checkbox" name="get_singleshot" value="16x16">Singleshot(for debug)<br>
-        </form>
-        <br>
-        <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="receive_ir()">Receive IR Signal</button>
-        <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="transmit_ir()">Transmit IR Signal</button>
+        <div id="debug"></div>
+        <div id="debug1"></div>
+        <div id="debug2"></div>
 
       </p>
       <hr />
