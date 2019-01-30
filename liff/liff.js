@@ -321,7 +321,7 @@ function liffGetMatrixDataCharacteristic(characteristic) {
 
 
 
-function transmit_ir() {]
+function transmit_ir() {
   ble_transmit_cmd(0)
 }
 
