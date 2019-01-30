@@ -123,6 +123,7 @@ function makeErrorMsg(errorObj) {
 function initializeApp() {
     liff.init(() => initializeLiff(), error => uiStatusError(makeErrorMsg(error), false));
 
+    /*
     document.getElementById('id_sendline').addEventListener('click', function () {
         liff.sendMessages([{
             type: 'text',
@@ -137,6 +138,7 @@ function initializeApp() {
             window.alert("Error sending message: " + error);
         });
     });
+    */
 }
 
 
