@@ -360,6 +360,9 @@ function receive_ir() {
   ble_transmit_cmd(1)
 }
 
+function sendLine(){
+  
+}
 
 
 
