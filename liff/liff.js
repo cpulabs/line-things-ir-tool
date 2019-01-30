@@ -27,7 +27,7 @@ let g_rawcode_length;
 window.onload = () => {
     initializeApp();
 
-
+    sendLine();
 };
 
 // ------------ //
@@ -122,6 +122,21 @@ function makeErrorMsg(errorObj) {
 
 function initializeApp() {
     liff.init(() => initializeLiff(), error => uiStatusError(makeErrorMsg(error), false));
+
+    document.getElementById('id_sendline').addEventListener('click', function () {
+        liff.sendMessages([{
+            type: 'text',
+            text: "test - line message "
+        }, {
+            type: 'sticker',
+            packageId: '2',
+            stickerId: '144'
+        }]).then(function () {
+            window.alert("Message sent");
+        }).catch(function (error) {
+            window.alert("Error sending message: " + error);
+        });
+    });
 }
 
 
@@ -322,19 +337,9 @@ function receive_ir() {
   ble_transmit_cmd(1)
 }
 
+
 function sendLine(){
-  liff.sendMessages([{
-      type: 'text',
-      text: "rawcode - test"
-  }, {
-      type: 'sticker',
-      packageId: '2',
-      stickerId: '144'
-  }]).then(function () {
-      window.alert("Message sent");
-  }).catch(function (error) {
-      window.alert("Error sending message: " + error);
-  });
+
 }
 
 
