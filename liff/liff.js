@@ -298,7 +298,26 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                 g_rawcode_length = rawcode_length;
 
                 document.getElementById("rawcode_length").innerText = rawcode_length;
-                document.getElementById("code_format").innerText = ir_format;
+                var fotmat_txt = "";
+                if(ir_format == 0){
+                  fotmat_txt = "UNKNOWN";
+                }else if(ir_format == 1){
+                  fotmat_txt = "NEC";
+                }else if(ir_format == 2){
+                  fotmat_txt = "SONY";
+                }else if(ir_format == 3){
+                  fotmat_txt = "PANASONIC";
+                }else if(ir_format == 4){
+                  fotmat_txt = "JVC";
+                }else if(ir_format == 5){
+                  fotmat_txt = "RC5";
+                }else if(ir_format == 6){
+                  fotmat_txt = "RC6";
+                }else{
+                  fotmat_txt = "UNKNOWN";
+                }
+                document.getElementById("code_format").innerText = fotmat_txt;
+
                 document.getElementById("freq").innerText = (ir_freq == 0)? "38k" : "40k";
 
                 var str_rawcode = "";
