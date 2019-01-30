@@ -321,7 +321,8 @@ function liffGetMatrixDataCharacteristic(characteristic) {
               }
             }else if(data[0] == 1){
                 //receive comprex Data
-                document.getElementById("code_comprex").innerText = "AAA";
+                var r_comprex = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
+                document.getElementById("code_comprex").innerText = r_comprex.toString(16);
 
             }
         });
