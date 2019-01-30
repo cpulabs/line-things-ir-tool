@@ -88,6 +88,13 @@ function uiDebug2Message(message){
 }
 
 
+function uiProgressBar(max, value){
+  var progressBar = document.getElementById('state_progress');
+  progressBar.max = max;
+  progressBar.value = value;
+}
+
+
 function uiToggleDeviceConnected(connected) {
     const elStatus = document.getElementById("status");
     const elControls = document.getElementById("controls");
@@ -292,6 +299,8 @@ function liffGetMatrixDataCharacteristic(characteristic) {
             uiDebug1Message(index);
             uiDebug2Message(length_index);
 
+            uiProgressBar(length_index-1, index);
+
             if(index == (length_index-1)){
                 g_ir_freq = ir_freq;
                 g_ir_format = ir_format;
@@ -398,6 +407,8 @@ function ble_transmit_cmd(cmd) {
         uiDebugMessage("liffWriteLoadMatrix");
         uiStatusError(makeErrorMsg(error), false);
       });
+
+      uiProgressBar(g_rawcode_length/2, i+1);
     }
   }else{
     window.cmdCharacteristic.writeValue(new Uint8Array([1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])).catch(error => {
