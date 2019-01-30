@@ -264,62 +264,63 @@ function liffGetMatrixDataCharacteristic(characteristic) {
             const data = (new Uint8Array(e.target.value.buffer));     //16Byte
 
 
-            uiDebugMessage(data);
+            if(data[0] == 0){
+              var index = data[1];
+              var length_index = (data[2] << 8) + data[3];
+              var ir_freq = data[4];
+              var ir_format = data[5];
+              var rawcode_length = (data[6] << 8) + data[7];
+              var code0 = (data[8] << 24) + (data[9] << 16) + (data[10] << 8) + data[11];
+              var code1 = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
 
-            var index = data[1];
-            var length_index = (data[2] << 8) + data[3];
-            var ir_freq = data[4];
-            var ir_format = data[5];
-            var rawcode_length = (data[6] << 8) + data[7];
-            var code0 = (data[8] << 24) + (data[9] << 16) + (data[10] << 8) + data[11];
-            var code1 = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
+              g_rawcode[index*2] = code0 * g_ir_margin;
+              g_rawcode[index*2 + 1] = code1 * g_ir_margin;
 
-            g_rawcode[index*2] = code0 * g_ir_margin;
-            g_rawcode[index*2 + 1] = code1 * g_ir_margin;
+              uiDebug1Message(index);
+              uiDebug2Message(length_index);
 
-            uiDebug1Message(index);
-            uiDebug2Message(length_index);
+              uiProgressBar(length_index-1, index);
 
-            uiProgressBar(length_index-1, index);
+              if(index == (length_index-1)){
+                  g_ir_freq = ir_freq;
+                  g_ir_format = ir_format;
+                  g_rawcode_length = rawcode_length;
 
-            if(index == (length_index-1)){
-                g_ir_freq = ir_freq;
-                g_ir_format = ir_format;
-                g_rawcode_length = rawcode_length;
-
-                document.getElementById("rawcode_length").innerText = rawcode_length;
-                var fotmat_txt = "";
-                if(ir_format == 0){
-                  fotmat_txt = "UNKNOWN";
-                }else if(ir_format == 1){
-                  fotmat_txt = "NEC";
-                }else if(ir_format == 2){
-                  fotmat_txt = "SONY";
-                }else if(ir_format == 3){
-                  fotmat_txt = "PANASONIC";
-                }else if(ir_format == 4){
-                  fotmat_txt = "JVC";
-                }else if(ir_format == 5){
-                  fotmat_txt = "RC5";
-                }else if(ir_format == 6){
-                  fotmat_txt = "RC6";
-                }else{
-                  fotmat_txt = "UNKNOWN";
-                }
-                document.getElementById("code_format").innerText = fotmat_txt;
-
-                document.getElementById("freq").innerText = (ir_freq == 0)? "38k" : "40k";
-
-                var str_rawcode = "";
-                for(var i = 0; i < rawcode_length; i = i + 1){
-                  str_rawcode = str_rawcode + g_rawcode[i];
-                  if(i < rawcode_length - 1){
-                    str_rawcode = str_rawcode + ",";
+                  document.getElementById("rawcode_length").innerText = rawcode_length;
+                  var fotmat_txt = "";
+                  if(ir_format == 0){
+                    fotmat_txt = "UNKNOWN";
+                  }else if(ir_format == 1){
+                    fotmat_txt = "NEC";
+                  }else if(ir_format == 2){
+                    fotmat_txt = "SONY";
+                  }else if(ir_format == 3){
+                    fotmat_txt = "PANASONIC";
+                  }else if(ir_format == 4){
+                    fotmat_txt = "JVC";
+                  }else if(ir_format == 5){
+                    fotmat_txt = "RC5";
+                  }else if(ir_format == 6){
+                    fotmat_txt = "RC6";
+                  }else{
+                    fotmat_txt = "UNKNOWN";
                   }
-                }
-                document.getElementById("rawcode").innerText = str_rawcode;
-                //document.getElementById("rawcode").value = str_rawcode;
-            }
+                  document.getElementById("code_format").innerText = fotmat_txt;
+
+                  document.getElementById("freq").innerText = (ir_freq == 0)? "38k" : "40k";
+
+                  var str_rawcode = "";
+                  for(var i = 0; i < rawcode_length; i = i + 1){
+                    str_rawcode = str_rawcode + g_rawcode[i];
+                    if(i < rawcode_length - 1){
+                      str_rawcode = str_rawcode + ",";
+                    }
+                  }
+                  document.getElementById("rawcode").innerText = str_rawcode;
+                  //document.getElementById("rawcode").value = str_rawcode;
+              }
+            }else if(){}
+
 
 
         });
