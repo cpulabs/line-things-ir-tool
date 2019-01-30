@@ -18,6 +18,8 @@ let g_ir_freq;
 let g_ir_format;
 let g_rawcode_length;
 
+let g_ir_margin = 2;    //Convert to IRKit value from ESP32
+
 
 
 // -------------- //
@@ -272,8 +274,8 @@ function liffGetMatrixDataCharacteristic(characteristic) {
             var code0 = (data[8] << 24) + (data[9] << 16) + (data[10] << 8) + data[11];
             var code1 = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
 
-            g_rawcode[index*2] = code0;
-            g_rawcode[index*2 + 1] = code1;
+            g_rawcode[index*2] = code0 * g_ir_margin;
+            g_rawcode[index*2 + 1] = code1 * g_ir_margin;
 
             uiDebug1Message(index);
             uiDebug2Message(length_index);
@@ -381,12 +383,12 @@ function ble_transmit_cmd(cmd) {
 
       //Data0
       for(var j = 0; j < 4; j = j + 1){
-        tx_data[8+j] = 0xff & (g_rawcode[i*2] >> (8*(3-j)));
+        tx_data[8+j] = 0xff & ((g_rawcode[i*2] / g_ir_margin) >> (8*(3-j)));
       }
 
       //Data1
       for(var j = 0; j < 4; j = j + 1){
-        tx_data[12+j] = 0xff & (g_rawcode[i*2 + 1] >> (8*(3-j)));
+        tx_data[12+j] = 0xff & ((g_rawcode[i*2 + 1] / g_ir_margin) >> (8*(3-j)));
       }
 
       //Transmit
