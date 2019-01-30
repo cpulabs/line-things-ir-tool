@@ -23,7 +23,7 @@
       <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="receive_ir()">Receive IR</button>
       <button id="btn-led-toggle" class="btn btn-led-toggle" onclick="transmit_ir()">Transmit IR</button>
 
-      <br>
+      <hr />
 
       <!-- Device Info Table -->
       <table class="device-info-table">
@@ -40,13 +40,20 @@
           <th class="device-info-cell device-info-key">Freq</th>
           <td class="device-info-cell device-info-val" id="freq"></td>
         </tr>
+
+        <!--
         <tr>
           <th class="device-info-cell device-info-key">Rawcode</th>
 
-          <!-- <td class="device-info-cell device-info-val" id="rawcode"></td> -->
-          <td><input type="text" value="" wrap="hard" style="width:200px;height:200px;" word-wrap="break-word" id="rawcode"></td>
+           <td class="device-info-cell device-info-val" id="rawcode"></td> 
+
         </tr>
+      -->
       </table>
+
+      <hr />
+        <div class="device-info-cell device-info-key">Rawcode</div>
+        <div class="device-info-cell device-info-val" id="rawcode"></div>
 
       <hr />
 
