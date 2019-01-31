@@ -274,7 +274,10 @@ function liffGetMatrixDataCharacteristic(characteristic) {
               var code1 = (data[12] << 24) + (data[13] << 16) + (data[14] << 8) + data[15];
 
               g_rawcode[index*2] = code0 * g_ir_margin;
-              g_rawcode[index*2 + 1] = code1 * g_ir_margin;
+              //一番最後のデータを取得しないようにするため
+              if((index == (length_index-1) && rawcode_length % 2 == 1) != 1){
+                g_rawcode[index*2 + 1] = code1 * g_ir_margin;
+              }
 
               uiDebug1Message(index);
               uiDebug2Message(length_index);
