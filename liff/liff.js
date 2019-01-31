@@ -359,9 +359,10 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                   for(var i = 0; i < rawcode_length; i = i + 1){
                     if(g_rawcode[i] != undefined){
                       str_rawcode = str_rawcode + g_rawcode[i];
-                    }
-                    if(i < rawcode_length - 1){
-                      str_rawcode = str_rawcode + ",";
+
+                      if(i < rawcode_length - 1){
+                        str_rawcode = str_rawcode + ",";
+                      }
                     }
                   }
                   document.getElementById("rawcode").innerText = str_rawcode;
