@@ -327,6 +327,8 @@ function liffGetMatrixDataCharacteristic(characteristic) {
                     fotmat_txt = "PROTON";
                   }else if(ir_format == 17){
                     fotmat_txt = "LEGO_PF";
+                  }else if(ir_format == 18){
+                    fotmat_txt = "AEHA";
                   }else{
                     fotmat_txt = "UNKNOWN";
                   }
